@@ -1,1 +1,1203 @@
-do local v0=game:GetService("Players");local v1=game:GetService("TextChatService");local v2=game:GetService("RunService");local v3=game:GetService("UserInputService");local v4=game:GetService("Lighting");local v5=game:GetService("Workspace");local v6=v0.LocalPlayer;local v7=v0.LocalPlayer;local v8=v7.Name;local v9=v7.UserId;local v10="qazwsx14736991";local v11="faggot";local v12="https://raw.githubusercontent.com/deividcomsono/Obsidian/main/";local v13=loadstring(game:HttpGet(v12   .. "Library.lua" ))();local v14=loadstring(game:HttpGet(v12   .. "addons/ThemeManager.lua" ))();local v15=loadstring(game:HttpGet(v12   .. "addons/SaveManager.lua" ))();local v16=v13:CreateWindow({Title="陈某脚本 - SY公会",Footer="作者：陈某 | QQ群: 632620595",Icon=95816097006870,NotifySide="Right",ShowCustomCursor=true});task.spawn(function() task.wait(2.5);if (v8==v10) then v13:Notify("欢迎陳某脚本作者本人！感谢你的付出～",10);pcall(function() if (v1.ChatVersion==Enum.ChatVersion.TextChatService) then v1.TextChannels.RBXGeneral:SendAsync("陳某脚本作者已进入游戏");end end);elseif (v8==v11) then v13:Notify("欢迎合作人 faggot！感谢支持与信任",10);pcall(function() if (v1.ChatVersion==Enum.ChatVersion.TextChatService) then v1.TextChannels.RBXGeneral:SendAsync("合作人 faggot 已加入游戏");end end);else v13:Notify("脚本加载成功！欢迎使用陈某脚本",5);end end);local v17={Main=v16:AddTab("通用内容","user"),Gun=v16:AddTab("陈某枪战功能","crosshair"),BladeBall=v16:AddTab("刀刃球","swords"),Seam=v16:AddTab("缝合脚本","puzzle"),Battlefield=v16:AddTab("战场脚本","sword"),UI=v16:AddTab("UI 设置","settings"),Lc=v16:AddTab("lc","user")};local v18=false;local v19;local function v20() if v19 then v19:Disconnect();end v18=true;v4.Ambient=Color3.new(1,1,1);v4.ColorShift_Bottom=Color3.new(1,1,1);v4.ColorShift_Top=Color3.new(1,1,1);v19=v2.RenderStepped:Connect(function() if v18 then for v308,v309 in pairs(v5:GetDescendants()) do if (v309:IsA("BasePart") and  not v309.Parent:FindFirstChild("Humanoid")) then v309.Material=Enum.Material.Neon;v309.Color=Color3.new(0,1,0);end end end end);end local function v21() v18=false;if v19 then v19:Disconnect();v19=nil;end v4.Ambient=Color3.new(0,0,0);v4.ColorShift_Bottom=Color3.new(0,0,0);v4.ColorShift_Top=Color3.new(0,0,0);for v220,v221 in pairs(v5:GetDescendants()) do if v221:IsA("BasePart") then v221.Material=Enum.Material.Plastic;end end end local v22=v17.Main:AddLeftGroupbox("网络状态","activity");local v23=v22:AddLabel("时间: 加载中...",true);local v24=v22:AddLabel("Ping: 检测中...",true);local v25=v22:AddLabel("FPS: 检测中...",true);local v26=v22:AddLabel("网络: 检测中...",true);task.spawn(function() local v59=tick();local v60=0;while task.wait(0.5) do v60+=1 local v222=tick();if ((v222-v59)>=1) then local v255=v60;v60=0;v59=v222;local v256=0;pcall(function() v256=math.floor(game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue());end);if (v256<=0) then v256=math.random(30,120);end local v257="一般";if ((v256<80) and (v255>50)) then v257="极佳";elseif ((v256<150) and (v255>30)) then v257="良好";end v23:SetText("时间: "   .. os.date("%H:%M") );v24:SetText("Ping: "   .. v256   .. "ms" );v25:SetText("FPS: "   .. v255 );v26:SetText("网络: "   .. v257 );end end end);local v27=v17.Main:AddLeftGroupbox("角色控制","user");v27:AddToggle("InfJump",{Text="无限跳跃",Default=false,Callback=function(v61) if v61 then local v249=v3.JumpRequest:Connect(function() local v258=v6.Character and v6.Character:FindFirstChildOfClass("Humanoid") ;if v258 then v258:ChangeState("Jumping");end end);Toggles.InfJump.Conn=v249;elseif Toggles.InfJump.Conn then Toggles.InfJump.Conn:Disconnect();end end});v27:AddSlider("WalkSpeed",{Text="移动速度",Default=16,Min=16,Max=400,Rounding=0,Callback=function(v62) local v63=v6.Character and v6.Character:FindFirstChildOfClass("Humanoid") ;if v63 then v63.WalkSpeed=v62;end end});v27:AddSlider("Gravity",{Text="重力",Default=v5.Gravity,Min=0,Max=500,Rounding=0,Callback=function(v64) v5.Gravity=v64;end});v27:AddToggle("GodMode",{Text="無限血 (God Mode)",Default=false,Callback=function(v66) local v67;if v66 then v67=v2.Heartbeat:Connect(function() local v259=v6.Character and v6.Character:FindFirstChildOfClass("Humanoid") ;if (v259 and (v259.Health<v259.MaxHealth)) then v259.Health=v259.MaxHealth;end end);Toggles.GodMode.Conn=v67;elseif Toggles.GodMode.Conn then Toggles.GodMode.Conn:Disconnect();Toggles.GodMode.Conn=nil;end end});local v28=v17.Main:AddRightGroupbox("飞行");v28:AddButton({Text="加载飞行脚本",Func=function() local v68=Instance.new("ScreenGui");local v69=Instance.new("Frame");local v70=Instance.new("TextButton");local v71=Instance.new("TextButton");local v72=Instance.new("TextButton");local v73=Instance.new("TextLabel");local v74=Instance.new("TextButton");local v75=Instance.new("TextLabel");local v76=Instance.new("TextButton");local v77=Instance.new("TextButton");local v78=Instance.new("TextButton");local v79=Instance.new("TextButton");v68.Name="main";v68.Parent=game.Players.LocalPlayer:WaitForChild("PlayerGui");v68.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;v68.ResetOnSpawn=false;v69.Parent=v68;v69.BackgroundColor3=Color3.fromRGB(163,255,137);v69.BorderColor3=Color3.fromRGB(103,221,213);v69.Position=UDim2.new(0.100320168,0,0.379746825,0);v69.Size=UDim2.new(0,190,0,57);v70.Name="up";v70.Parent=v69;v70.BackgroundColor3=Color3.fromRGB(79,255,152);v70.Size=UDim2.new(0,44,0,28);v70.Font=Enum.Font.SourceSans;v70.Text="上升";v70.TextColor3=Color3.fromRGB(0,0,0);v70.TextSize=14;v71.Name="down";v71.Parent=v69;v71.BackgroundColor3=Color3.fromRGB(215,255,121);v71.Position=UDim2.new(0,0,0.491228074,0);v71.Size=UDim2.new(0,44,0,28);v71.Font=Enum.Font.SourceSans;v71.Text="下降";v71.TextColor3=Color3.fromRGB(0,0,0);v71.TextSize=14;v72.Name="onof";v72.Parent=v69;v72.BackgroundColor3=Color3.fromRGB(255,249,74);v72.Position=UDim2.new(0.702823281,0,0.491228074,0);v72.Size=UDim2.new(0,56,0,28);v72.Font=Enum.Font.SourceSans;v72.Text="飞行";v72.TextColor3=Color3.fromRGB(0,0,0);v72.TextSize=14;v73.Parent=v69;v73.BackgroundColor3=Color3.fromRGB(242,60,255);v73.Position=UDim2.new(0.469327301,0,0,0);v73.Size=UDim2.new(0,100,0,28);v73.Font=Enum.Font.SourceSans;v73.Text="飞行脚本";v73.TextColor3=Color3.fromRGB(0,0,0);v73.TextScaled=true;v73.TextSize=14;v73.TextWrapped=true;v74.Name="plus";v74.Parent=v69;v74.BackgroundColor3=Color3.fromRGB(133,145,255);v74.Position=UDim2.new(0.231578946,0,0,0);v74.Size=UDim2.new(0,45,0,28);v74.Font=Enum.Font.SourceSans;v74.Text="+";v74.TextColor3=Color3.fromRGB(0,0,0);v74.TextScaled=true;v74.TextSize=14;v74.TextWrapped=true;v75.Name="speed";v75.Parent=v69;v75.BackgroundColor3=Color3.fromRGB(255,85,0);v75.Position=UDim2.new(0.468421042,0,0.491228074,0);v75.Size=UDim2.new(0,44,0,28);v75.Font=Enum.Font.SourceSans;v75.Text="1";v75.TextColor3=Color3.fromRGB(0,0,0);v75.TextScaled=true;v75.TextSize=14;v75.TextWrapped=true;v76.Name="mine";v76.Parent=v69;v76.BackgroundColor3=Color3.fromRGB(123,255,247);v76.Position=UDim2.new(0.231578946,0,0.491228074,0);v76.Size=UDim2.new(0,45,0,29);v76.Font=Enum.Font.SourceSans;v76.Text="-";v76.TextColor3=Color3.fromRGB(0,0,0);v76.TextScaled=true;v76.TextSize=14;v76.TextWrapped=true;v77.Name="Close";v77.Parent=v68.Frame;v77.BackgroundColor3=Color3.fromRGB(225,25,0);v77.Font="SourceSans";v77.Size=UDim2.new(0,45,0,28);v77.Text="×";v77.TextSize=30;v77.Position=UDim2.new(0,0, -1,27);v78.Name="minimize";v78.Parent=v68.Frame;v78.BackgroundColor3=Color3.fromRGB(192,150,230);v78.Font="SourceSans";v78.Size=UDim2.new(0,45,0,28);v78.Text="-";v78.TextSize=40;v78.Position=UDim2.new(0,44, -1,27);v79.Name="minimize2";v79.Parent=v68.Frame;v79.BackgroundColor3=Color3.fromRGB(192,150,230);v79.Font="SourceSans";v79.Size=UDim2.new(0,45,0,28);v79.Text="+";v79.TextSize=40;v79.Position=UDim2.new(0,44, -1,57);v79.Visible=false;speeds=1;local v186=game:GetService("Players").LocalPlayer;local v187=game.Players.LocalPlayer.Character;local v188=v187 and v187:FindFirstChildWhichIsA("Humanoid") ;nowe=false;v69.Active=true;v69.Draggable=true;v72.MouseButton1Down:connect(function() if (nowe==true) then nowe=false;v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics,true);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming,true);v186.Character.Humanoid:ChangeState(Enum.HumanoidStateType.RunningNoPhysics);else nowe=true;for v311=1,speeds do spawn(function() local v319=game:GetService("RunService").Heartbeat;tpwalking=true;local v320=game.Players.LocalPlayer.Character;local v321=v320 and v320:FindFirstChildWhichIsA("Humanoid") ;while tpwalking and v319:Wait() and v320 and v321 and v321.Parent  do if (v321.MoveDirection.Magnitude>0) then v320:TranslateBy(v321.MoveDirection);end end end);end game.Players.LocalPlayer.Character.Animate.Disabled=true;local v261=game.Players.LocalPlayer.Character;local v262=v261:FindFirstChildOfClass("Humanoid") or v261:FindFirstChildOfClass("AnimationController") ;for v312,v313 in next,v262:GetPlayingAnimationTracks() do v313:AdjustSpeed(0);end v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics,false);v186.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming,false);v186.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Swimming);end if (game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").RigType==Enum.HumanoidRigType.R6) then local v263=game.Players.LocalPlayer;local v264=v263.Character.Torso;local v265=true;local v266=true;local v267={f=0,b=0,l=0,r=0};local v268={f=0,b=0,l=0,r=0};local v269=50;local v270=0;local v271=Instance.new("BodyGyro",v264);v271.P=90000;v271.maxTorque=Vector3.new(8999999488,8999999488,8999999488);v271.cframe=v264.CFrame;local v276=Instance.new("BodyVelocity",v264);v276.velocity=Vector3.new(0,0.1,0);v276.maxForce=Vector3.new(8999999488,8999999488,8999999488);if (nowe==true) then v263.Character.Humanoid.PlatformStand=true;end while (nowe==true) or (game:GetService("Players").LocalPlayer.Character.Humanoid.Health==0)  do game:GetService("RunService").RenderStepped:Wait();if (((v267.l + v267.r)~=0) or ((v267.f + v267.b)~=0)) then v270=v270 + 0.5 + (v270/v269) ;if (v270>v269) then v270=v269;end elseif ( not (((v267.l + v267.r)~=0) or ((v267.f + v267.b)~=0)) and (v270~=0)) then v270=v270-1 ;if (v270<0) then v270=0;end end if (((v267.l + v267.r)~=0) or ((v267.f + v267.b)~=0)) then v276.velocity=((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (v267.f + v267.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(v267.l + v267.r ,(v267.f + v267.b) * 0.2 ,0).p) -game.Workspace.CurrentCamera.CoordinateFrame.p)) * v270 ;v268={f=v267.f,b=v267.b,l=v267.l,r=v267.r};elseif (((v267.l + v267.r)==0) and ((v267.f + v267.b)==0) and (v270~=0)) then v276.velocity=((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (v268.f + v268.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(v268.l + v268.r ,(v268.f + v268.b) * 0.2 ,0).p) -game.Workspace.CurrentCamera.CoordinateFrame.p)) * v270 ;else v276.velocity=Vector3.new(0,0,0);end v271.cframe=game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles( -math.rad(((v267.f + v267.b) * 50 * v270)/v269 ),0,0) ;end v267={f=0,b=0,l=0,r=0};v268={f=0,b=0,l=0,r=0};v270=0;v271:Destroy();v276:Destroy();v263.Character.Humanoid.PlatformStand=false;game.Players.LocalPlayer.Character.Animate.Disabled=false;tpwalking=false;else local v281=game.Players.LocalPlayer;local v282=v281.Character.UpperTorso;local v283=true;local v284=true;local v285={f=0,b=0,l=0,r=0};local v286={f=0,b=0,l=0,r=0};local v287=50;local v288=0;local v289=Instance.new("BodyGyro",v282);v289.P=90000;v289.maxTorque=Vector3.new(8999999488,8999999488,8999999488);v289.cframe=v282.CFrame;local v294=Instance.new("BodyVelocity",v282);v294.velocity=Vector3.new(0,0.1,0);v294.maxForce=Vector3.new(8999999488,8999999488,8999999488);if (nowe==true) then v281.Character.Humanoid.PlatformStand=true;end while (nowe==true) or (game:GetService("Players").LocalPlayer.Character.Humanoid.Health==0)  do wait();if (((v285.l + v285.r)~=0) or ((v285.f + v285.b)~=0)) then v288=v288 + 0.5 + (v288/v287) ;if (v288>v287) then v288=v287;end elseif ( not (((v285.l + v285.r)~=0) or ((v285.f + v285.b)~=0)) and (v288~=0)) then v288=v288-1 ;if (v288<0) then v288=0;end end if (((v285.l + v285.r)~=0) or ((v285.f + v285.b)~=0)) then v294.velocity=((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (v285.f + v285.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(v285.l + v285.r ,(v285.f + v285.b) * 0.2 ,0).p) -game.Workspace.CurrentCamera.CoordinateFrame.p)) * v288 ;v286={f=v285.f,b=v285.b,l=v285.l,r=v285.r};elseif (((v285.l + v285.r)==0) and ((v285.f + v285.b)==0) and (v288~=0)) then v294.velocity=((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (v286.f + v286.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(v286.l + v286.r ,(v286.f + v286.b) * 0.2 ,0).p) -game.Workspace.CurrentCamera.CoordinateFrame.p)) * v288 ;else v294.velocity=Vector3.new(0,0,0);end v289.cframe=game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles( -math.rad(((v285.f + v285.b) * 50 * v288)/v287 ),0,0) ;end v285={f=0,b=0,l=0,r=0};v286={f=0,b=0,l=0,r=0};v288=0;v289:Destroy();v294:Destroy();v281.Character.Humanoid.PlatformStand=false;game.Players.LocalPlayer.Character.Animate.Disabled=false;tpwalking=false;end end);local v191;v70.MouseButton1Down:connect(function() v191=v70.MouseEnter:connect(function() while v191 do wait();game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,1,0) ;end end);end);v70.MouseLeave:connect(function() if v191 then v191:Disconnect();v191=nil;end end);local v192;v71.MouseButton1Down:connect(function() v192=v71.MouseEnter:connect(function() while v192 do wait();game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -1,0) ;end end);end);v71.MouseLeave:connect(function() if v192 then v192:Disconnect();v192=nil;end end);game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(v223) wait(0.7);game.Players.LocalPlayer.Character.Humanoid.PlatformStand=false;game.Players.LocalPlayer.Character.Animate.Disabled=false;end);v74.MouseButton1Down:connect(function() speeds=speeds + 1 ;v75.Text=speeds;if (nowe==true) then tpwalking=false;for v316=1,speeds do spawn(function() local v324=game:GetService("RunService").Heartbeat;tpwalking=true;local v325=game.Players.LocalPlayer.Character;local v326=v325 and v325:FindFirstChildWhichIsA("Humanoid") ;while tpwalking and v324:Wait() and v325 and v326 and v326.Parent  do if (v326.MoveDirection.Magnitude>0) then v325:TranslateBy(v326.MoveDirection);end end end);end end end);v76.MouseButton1Down:connect(function() if (speeds==1) then v75.Text="不能小于1";wait(1);v75.Text=speeds;else speeds=speeds-1 ;v75.Text=speeds;if (nowe==true) then tpwalking=false;for v339=1,speeds do spawn(function() local v340=game:GetService("RunService").Heartbeat;tpwalking=true;local v341=game.Players.LocalPlayer.Character;local v342=v341 and v341:FindFirstChildWhichIsA("Humanoid") ;while tpwalking and v340:Wait() and v341 and v342 and v342.Parent  do if (v342.MoveDirection.Magnitude>0) then v341:TranslateBy(v342.MoveDirection);end end end);end end end end);v77.MouseButton1Click:Connect(function() v68:Destroy();end);v78.MouseButton1Click:Connect(function() v70.Visible=false;v71.Visible=false;v72.Visible=false;v74.Visible=false;v75.Visible=false;v76.Visible=false;v78.Visible=false;v79.Visible=true;v68.Frame.BackgroundTransparency=1;v77.Position=UDim2.new(0,0, -1,57);end);v79.MouseButton1Click:Connect(function() v70.Visible=true;v71.Visible=true;v72.Visible=true;v74.Visible=true;v75.Visible=true;v76.Visible=true;v78.Visible=true;v79.Visible=false;v68.Frame.BackgroundTransparency=0;v77.Position=UDim2.new(0,0, -1,27);end);v13:Notify("飞行脚本已加载",3);end});local v29=v17.Main:AddRightGroupbox("视觉设置","eye");v29:AddSlider("FOV",{Text="广角 (FOV)",Default=70,Min=30,Max=120,Rounding=0,Callback=function(v193) v5.CurrentCamera.FieldOfView=v193;end});v29:AddToggle("NightVision",{Text="夜视模式",Default=false,Callback=function(v195) if v195 then v20();else v21();end end});local v30=v17.Gun:AddLeftGroupbox("自瞄设置","target");local v31=false;local v32;local v33="Head";local v34=true;local v35=true;local v36=150;local v37=0.2;local v38=true;local v39=Drawing.new("Circle");v39.Visible=false;v39.Thickness=2;v39.Color=Color3.fromRGB(255,0,0);v39.Radius=v36;v39.NumSides=100;v39.Filled=false;local function v46(v196) if  not v35 then return true;end local v197=v5.CurrentCamera;local v198=v197.CFrame.Position;local v199=v196.Position-v198 ;local v200=RaycastParams.new();v200.FilterDescendantsInstances={v6.Character};v200.FilterType=Enum.RaycastFilterType.Blacklist;local v204=v5:Raycast(v198,v199,v200);return  not v204 or v204.Instance:IsDescendantOf(v196.Parent) ;end local function v47() local v205=v5.CurrentCamera;local v206=v3:GetMouseLocation();local v207,v208=nil,v36;for v247,v248 in v0:GetPlayers() do if ((v248~=v6) and v248.Character) then local v303=v248.Character:FindFirstChildOfClass("Humanoid");if (v303 and (v303.Health>0) and v248.Character:FindFirstChild(v33)) then if (v34 and (v248.Team==v6.Team)) then continue;end local v327=v248.Character[v33];local v328,v329=v205:WorldToViewportPoint(v327.Position);if v329 then local v343=(Vector2.new(v328.X,v328.Y) -v206).Magnitude;if ((v343<v208) and v46(v327)) then v208=v343;v207=v327;end end end end end return v207;end v30:AddToggle("AimbotEnable",{Text="启用自瞄 + FOV圈",Default=false,Callback=function(v209) v31=v209;v39.Visible=v209;if v209 then v32=v2.RenderStepped:Connect(function() v39.Position=v3:GetMouseLocation();local v305=v3.TouchEnabled and  not v3.MouseEnabled ;local v306=(v305 and v38) or v3:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) ;if  not v306 then return;end local v307=v47();if v307 then local v330=v5.CurrentCamera;local v331=v330.CFrame;local v332=(v307.Position-v331.Position).Unit;v330.CFrame=v331:Lerp(CFrame.new(v331.Position,v331.Position + (v332 * 100) ),v37);end end);elseif v32 then v32:Disconnect();end end});v30:AddSlider("FOVRadius",{Text="FOV 半径",Default=150,Min=50,Max=400,Rounding=0,Callback=function(v211) v36=v211;v39.Radius=v211;end});v30:AddSlider("Smoothing",{Text="平滑度",Default=0.2,Min=0.05,Max=1,Rounding=2,Callback=function(v213) v37=v213;end});v30:AddToggle("WallCheck",{Text="墙透检查（只瞄可见敌人）",Default=true,Callback=function(v214) v35=v214;end});v30:AddToggle("TeamCheck",{Text="队友检查（不瞄队友）",Default=true,Callback=function(v215) v34=v215;end});v30:AddToggle("AlwaysMobile",{Text="手机端一直瞄准（无需按键）",Default=true,Callback=function(v216) v38=v216;end});local v48=v17.Seam:AddLeftGroupbox("缝合脚本加载","puzzle");v48:AddButton({Text="加载 IY（Infinite Yield）",Func=function() loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))();v13:Notify("IY 脚本已加载",3);end});v48:AddButton({Text="加载 wx 脚本",Func=function() loadstring(game:HttpGet("https://raw.githubusercontent.com/youyu665/WX-HUB/refs/heads/main/WX.lua"))();v13:Notify("wx 脚本已加载",3);end});v48:AddButton({Text="加载 XK Hub",Func=function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-XK-Hub-76803"))();v13:Notify("XK Hub 已加载",3);end});v48:AddButton({Text="加载 刘某脚本",Func=function() loadstring(game:HttpGet("https://raw.githubusercontent.com/liuliuqiang404-code/6/refs/heads/main/刘某脚本加减速"))();v13:Notify("刘某脚本已加载",3);end});v48:AddButton({Text="加载神秘脚本",Func=function() loadstring(game:HttpGet("https://pastebin.com/raw/Up3P2KBp"))();v13:Notify("神秘脚本已加载",3);end});v48:AddButton({Text="加载 tx 脚本",Func=function() loadstring(game:HttpGet("https://raw.githubusercontent.com/JsYb666/TX-Free-YYDS/refs/heads/main/FREE-TX-TEAM"))();v13:Notify("tx 脚本已加载",3);end});v48:AddButton({Text="加载甩飞全图脚本",Func=function() loadstring(game:HttpGet("https://pastebin.com/raw/zqyDSUWX"))();v13:Notify("脚本已加载",3);end});local v49=v17.BladeBall:AddLeftGroupbox("刀刃球功能","swords");v49:AddButton({Text="加载 Blade Ball 格挡 V4",Func=function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3ABlade%20Ball%20Parry%20V4.0.0",true))();v13:Notify("刀球格挡 V4 已加载",3);end});local v50=v17.Lc:AddLeftGroupbox("LC 相關功能","user");v50:AddButton({Text="加载 LC 腳本",Func=function() loadstring(game:HttpGet("https://raw.githubusercontent.com/yuanshenqdon/Script/refs/heads/main/LC.lua"))();v13:Notify("LC 腳本已加載",3);end});local v51=v17.Battlefield:AddLeftGroupbox("战场功能","sword");v51:AddButton({Text="无敌垃圾桶",Func=function() loadstring(game:HttpGet("https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man",true))();v13:Notify("无敌垃圾桶已加载",5);end});local v52=v17.UI:AddLeftGroupbox("菜单设置","settings");v52:AddToggle("CustomCursor",{Text="启用自定义光标",Default=true,Callback=function(v217) v13.ShowCustomCursor=v217;end});v52:AddDropdown("NotifySide",{Values={"Left","Right"},Default="Right",Text="通知显示位置",Callback=function(v219) v13:SetNotifySide(v219);end});v52:AddButton("卸载脚本",function() v13:Unload();end);v14:SetLibrary(v13);v15:SetLibrary(v13);v15:IgnoreThemeSettings();v14:SetFolder("ChenMoScript");v15:SetFolder("ChenMoScript/Game");v15:BuildConfigSection(v17.UI);v14:ApplyToTab(v17.UI);v15:LoadAutoloadConfig();print("陈某脚本完整版加载完成 - 已添加 faggot 专属欢迎");v13:Notify("完整版脚本已加载（含 faggot 专属问候）",8); end
+--[[
+ .____                  ________ ___.    _____                           __                
+ |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
+ |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
+ |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
+ |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
+         \/          \/         \/    \/                \/     \/     \/                   
+          \_Welcome to LuaObfuscator.com   (Alpha 0.10.9) ~  Much Love, Ferib 
+
+]]--
+
+local Players = game:GetService("Players");
+local TextChatService = game:GetService("TextChatService");
+local RunService = game:GetService("RunService");
+local UserInputService = game:GetService("UserInputService");
+local Lighting = game:GetService("Lighting");
+local Workspace = game:GetService("Workspace");
+local LP = Players.LocalPlayer;
+local UserName = LP.Name;
+local AuthorName = "qazwsx14736991";
+local PartnerName = "faggot";
+local repo = "https://raw.githubusercontent.com/deividcomsono/Obsidian/main/";
+local Library = loadstring(game:HttpGet(repo .. "Library.lua"))();
+local ThemeManager = loadstring(game:HttpGet(repo .. "addons/ThemeManager.lua"))();
+local SaveManager = loadstring(game:HttpGet(repo .. "addons/SaveManager.lua"))();
+local Window = Library:CreateWindow({Title="陈某脚本 - SY公会",Footer="作者：陈某 | QQ群: 632620595",Icon=0,NotifySide="Right",ShowCustomCursor=true});
+task.spawn(function()
+	local FlatIdent_8D327 = 0;
+	while true do
+		if (FlatIdent_8D327 == 0) then
+			task.wait(2.5);
+			if (UserName == AuthorName) then
+				local FlatIdent_24A02 = 0;
+				while true do
+					if (FlatIdent_24A02 == 0) then
+						Library:Notify("歡迎陳某腳本作者本人！", 10);
+						pcall(function()
+							if (TextChatService.ChatVersion == Enum.ChatVersion.TextChatService) then
+								TextChatService.TextChannels.RBXGeneral:SendAsync("陳某腳本作者已進入遊戲");
+							end
+						end);
+						break;
+					end
+				end
+			elseif (UserName == PartnerName) then
+				local FlatIdent_89562 = 0;
+				while true do
+					if (FlatIdent_89562 == 0) then
+						Library:Notify("歡迎合作人 faggot", 10);
+						pcall(function()
+							if (TextChatService.ChatVersion == Enum.ChatVersion.TextChatService) then
+								TextChatService.TextChannels.RBXGeneral:SendAsync("合作人 faggot 已加入遊戲");
+							end
+						end);
+						break;
+					end
+				end
+			else
+				Library:Notify("腳本加載成功！歡迎使用陈某腳本", 5);
+			end
+			break;
+		end
+	end
+end);
+local Tabs = {Main=Window:AddTab("通用內容", "user"),Gun=Window:AddTab("陈某枪战功能", "crosshair"),BladeBall=Window:AddTab("刀刃球", "swords"),Seam=Window:AddTab("縫合腳本", "puzzle"),Battlefield=Window:AddTab("戰場腳本", "sword"),UI=Window:AddTab("UI 設置", "settings"),Lc=Window:AddTab("lc", "user")};
+local nightVisionEnabled = false;
+local nightVisionConnection;
+local function EnableNightVision()
+	local FlatIdent_10DED = 0;
+	while true do
+		if (2 == FlatIdent_10DED) then
+			Lighting.ColorShift_Top = Color3.new(1, 1, 1);
+			nightVisionConnection = RunService.RenderStepped:Connect(function()
+				if nightVisionEnabled then
+					for _, obj in pairs(Workspace:GetDescendants()) do
+						if (obj:IsA("BasePart") and not obj.Parent:FindFirstChild("Humanoid")) then
+							local FlatIdent_7126A = 0;
+							while true do
+								if (FlatIdent_7126A == 0) then
+									obj.Material = Enum.Material.Neon;
+									obj.Color = Color3.new(0, 1, 0);
+									break;
+								end
+							end
+						end
+					end
+				end
+			end);
+			break;
+		end
+		if (FlatIdent_10DED == 1) then
+			Lighting.Ambient = Color3.new(1, 1, 1);
+			Lighting.ColorShift_Bottom = Color3.new(1, 1, 1);
+			FlatIdent_10DED = 2;
+		end
+		if (FlatIdent_10DED == 0) then
+			if nightVisionConnection then
+				nightVisionConnection:Disconnect();
+			end
+			nightVisionEnabled = true;
+			FlatIdent_10DED = 1;
+		end
+	end
+end
+local function DisableNightVision()
+	local FlatIdent_145D2 = 0;
+	while true do
+		if (FlatIdent_145D2 == 0) then
+			nightVisionEnabled = false;
+			if nightVisionConnection then
+				local FlatIdent_12703 = 0;
+				while true do
+					if (FlatIdent_12703 == 0) then
+						nightVisionConnection:Disconnect();
+						nightVisionConnection = nil;
+						break;
+					end
+				end
+			end
+			FlatIdent_145D2 = 1;
+		end
+		if (FlatIdent_145D2 == 1) then
+			Lighting.Ambient = Color3.new(0, 0, 0);
+			Lighting.ColorShift_Bottom = Color3.new(0, 0, 0);
+			FlatIdent_145D2 = 2;
+		end
+		if (2 == FlatIdent_145D2) then
+			Lighting.ColorShift_Top = Color3.new(0, 0, 0);
+			for _, obj in pairs(Workspace:GetDescendants()) do
+				if obj:IsA("BasePart") then
+					obj.Material = Enum.Material.Plastic;
+				end
+			end
+			break;
+		end
+	end
+end
+local PingSection = Tabs.Main:AddLeftGroupbox("網絡狀態", "activity");
+local TimeLabel = PingSection:AddLabel("時間: 載入中...", true);
+local PingLabel = PingSection:AddLabel("Ping: 檢測中...", true);
+local FPSLabel = PingSection:AddLabel("FPS: 檢測中...", true);
+local NetLabel = PingSection:AddLabel("網絡: 檢測中...", true);
+task.spawn(function()
+	local FlatIdent_656E9 = 0;
+	local lastTime;
+	local frameCount;
+	while true do
+		if (FlatIdent_656E9 == 0) then
+			lastTime, frameCount = tick(), 0;
+			while task.wait(0.5) do
+				local FlatIdent_2BD95 = 0;
+				local now;
+				while true do
+					if (FlatIdent_2BD95 == 1) then
+						if ((now - lastTime) >= 1) then
+							local FlatIdent_1D164 = 0;
+							local fps;
+							local ping;
+							local status;
+							while true do
+								if (FlatIdent_1D164 == 2) then
+									if ((ping < 80) and (fps > 50)) then
+										status = "極佳";
+									elseif ((ping < 150) and (fps > 30)) then
+										status = "良好";
+									end
+									TimeLabel:SetText("時間: " .. os.date("%H:%M"));
+									PingLabel:SetText("Ping: " .. ping .. "ms");
+									FlatIdent_1D164 = 3;
+								end
+								if (FlatIdent_1D164 == 1) then
+									ping = math.floor(game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue() or 60);
+									if (ping <= 0) then
+										ping = math.random(30, 120);
+									end
+									status = "一般";
+									FlatIdent_1D164 = 2;
+								end
+								if (FlatIdent_1D164 == 3) then
+									FPSLabel:SetText("FPS: " .. fps);
+									NetLabel:SetText("網絡: " .. status);
+									break;
+								end
+								if (FlatIdent_1D164 == 0) then
+									fps = frameCount;
+									frameCount = 0;
+									lastTime = now;
+									FlatIdent_1D164 = 1;
+								end
+							end
+						end
+						break;
+					end
+					if (FlatIdent_2BD95 == 0) then
+						frameCount += 1
+						now = tick();
+						FlatIdent_2BD95 = 1;
+					end
+				end
+			end
+			break;
+		end
+	end
+end);
+local CharSection = Tabs.Main:AddLeftGroupbox("角色控制", "user");
+CharSection:AddToggle("InfJump", {Text="無限跳躍",Default=false,Callback=function(v)
+	if v then
+		getgenv().InfJumpConn = UserInputService.JumpRequest:Connect(function()
+			local FlatIdent_60EA1 = 0;
+			local hum;
+			while true do
+				if (FlatIdent_60EA1 == 0) then
+					hum = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid");
+					if hum then
+						hum:ChangeState(Enum.HumanoidStateType.Jumping);
+					end
+					break;
+				end
+			end
+		end);
+	elseif getgenv().InfJumpConn then
+		getgenv().InfJumpConn:Disconnect();
+	end
+end});
+CharSection:AddSlider("WalkSpeed", {Text="移動速度",Default=16,Min=16,Max=400,Rounding=0,Callback=function(v)
+	local FlatIdent_31A5A = 0;
+	local hum;
+	while true do
+		if (FlatIdent_31A5A == 0) then
+			hum = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid");
+			if hum then
+				hum.WalkSpeed = v;
+			end
+			break;
+		end
+	end
+end});
+CharSection:AddSlider("Gravity", {Text="重力",Default=Workspace.Gravity,Min=0,Max=500,Rounding=0,Callback=function(v)
+	Workspace.Gravity = v;
+end});
+CharSection:AddToggle("GodMode", {Text="無限血 (God Mode)",Default=false,Callback=function(v)
+	if v then
+		getgenv().GodConn = RunService.Heartbeat:Connect(function()
+			local FlatIdent_6066D = 0;
+			local hum;
+			while true do
+				if (FlatIdent_6066D == 0) then
+					hum = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid");
+					if (hum and (hum.Health < hum.MaxHealth)) then
+						hum.Health = hum.MaxHealth;
+					end
+					break;
+				end
+			end
+		end);
+	elseif getgenv().GodConn then
+		local FlatIdent_5ED46 = 0;
+		while true do
+			if (FlatIdent_5ED46 == 0) then
+				getgenv().GodConn:Disconnect();
+				getgenv().GodConn = nil;
+				break;
+			end
+		end
+	end
+end});
+CharSection:AddButton({Text="甩飛",Func=function()
+	local FlatIdent_43BF7 = 0;
+	while true do
+		if (0 == FlatIdent_43BF7) then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/0Ben1/fe/main/obf_5wpM7bBcOPspmX7lQ3m75SrYNWqxZ858ai3tJdEAId6jSI05IOUB224FQ0VSAswH.lua.txt", true))();
+			Library:Notify("甩飛腳本已執行", 5);
+			break;
+		end
+	end
+end});
+local FlySection = Tabs.Main:AddRightGroupbox("飛行", "plane");
+FlySection:AddButton({Text="載入飛行腳本",Func=function()
+	local main = Instance.new("ScreenGui");
+	local Frame = Instance.new("Frame");
+	local up = Instance.new("TextButton");
+	local down = Instance.new("TextButton");
+	local onof = Instance.new("TextButton");
+	local TextLabel = Instance.new("TextLabel");
+	local plus = Instance.new("TextButton");
+	local speed = Instance.new("TextLabel");
+	local mine = Instance.new("TextButton");
+	local closebutton = Instance.new("TextButton");
+	local mini = Instance.new("TextButton");
+	local mini2 = Instance.new("TextButton");
+	main.Name = "main";
+	main.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui");
+	main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+	main.ResetOnSpawn = false;
+	Frame.Parent = main;
+	Frame.BackgroundColor3 = Color3.fromRGB(163, 255, 137);
+	Frame.BorderColor3 = Color3.fromRGB(103, 221, 213);
+	Frame.Position = UDim2.new(0.100320168, 0, 0.379746825, 0);
+	Frame.Size = UDim2.new(0, 190, 0, 57);
+	up.Name = "up";
+	up.Parent = Frame;
+	up.BackgroundColor3 = Color3.fromRGB(79, 255, 152);
+	up.Size = UDim2.new(0, 44, 0, 28);
+	up.Font = Enum.Font.SourceSans;
+	up.Text = "上升";
+	up.TextColor3 = Color3.fromRGB(0, 0, 0);
+	up.TextSize = 14;
+	down.Name = "down";
+	down.Parent = Frame;
+	down.BackgroundColor3 = Color3.fromRGB(215, 255, 121);
+	down.Position = UDim2.new(0, 0, 0.491228074, 0);
+	down.Size = UDim2.new(0, 44, 0, 28);
+	down.Font = Enum.Font.SourceSans;
+	down.Text = "下降";
+	down.TextColor3 = Color3.fromRGB(0, 0, 0);
+	down.TextSize = 14;
+	onof.Name = "onof";
+	onof.Parent = Frame;
+	onof.BackgroundColor3 = Color3.fromRGB(255, 249, 74);
+	onof.Position = UDim2.new(0.702823281, 0, 0.491228074, 0);
+	onof.Size = UDim2.new(0, 56, 0, 28);
+	onof.Font = Enum.Font.SourceSans;
+	onof.Text = "飞行";
+	onof.TextColor3 = Color3.fromRGB(0, 0, 0);
+	onof.TextSize = 14;
+	TextLabel.Parent = Frame;
+	TextLabel.BackgroundColor3 = Color3.fromRGB(242, 60, 255);
+	TextLabel.Position = UDim2.new(0.469327301, 0, 0, 0);
+	TextLabel.Size = UDim2.new(0, 100, 0, 28);
+	TextLabel.Font = Enum.Font.SourceSans;
+	TextLabel.Text = "陈某飞行";
+	TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0);
+	TextLabel.TextScaled = true;
+	TextLabel.TextSize = 14;
+	TextLabel.TextWrapped = true;
+	plus.Name = "plus";
+	plus.Parent = Frame;
+	plus.BackgroundColor3 = Color3.fromRGB(133, 145, 255);
+	plus.Position = UDim2.new(0.231578946, 0, 0, 0);
+	plus.Size = UDim2.new(0, 45, 0, 28);
+	plus.Font = Enum.Font.SourceSans;
+	plus.Text = "+";
+	plus.TextColor3 = Color3.fromRGB(0, 0, 0);
+	plus.TextScaled = true;
+	plus.TextSize = 14;
+	plus.TextWrapped = true;
+	speed.Name = "speed";
+	speed.Parent = Frame;
+	speed.BackgroundColor3 = Color3.fromRGB(255, 85, 0);
+	speed.Position = UDim2.new(0.468421042, 0, 0.491228074, 0);
+	speed.Size = UDim2.new(0, 44, 0, 28);
+	speed.Font = Enum.Font.SourceSans;
+	speed.Text = "1";
+	speed.TextColor3 = Color3.fromRGB(0, 0, 0);
+	speed.TextScaled = true;
+	speed.TextSize = 14;
+	speed.TextWrapped = true;
+	mine.Name = "mine";
+	mine.Parent = Frame;
+	mine.BackgroundColor3 = Color3.fromRGB(123, 255, 247);
+	mine.Position = UDim2.new(0.231578946, 0, 0.491228074, 0);
+	mine.Size = UDim2.new(0, 45, 0, 29);
+	mine.Font = Enum.Font.SourceSans;
+	mine.Text = "-";
+	mine.TextColor3 = Color3.fromRGB(0, 0, 0);
+	mine.TextScaled = true;
+	mine.TextSize = 14;
+	mine.TextWrapped = true;
+	closebutton.Name = "Close";
+	closebutton.Parent = main.Frame;
+	closebutton.BackgroundColor3 = Color3.fromRGB(225, 25, 0);
+	closebutton.Font = "SourceSans";
+	closebutton.Size = UDim2.new(0, 45, 0, 28);
+	closebutton.Text = "×";
+	closebutton.TextSize = 30;
+	closebutton.Position = UDim2.new(0, 0, -1, 27);
+	mini.Name = "minimize";
+	mini.Parent = main.Frame;
+	mini.BackgroundColor3 = Color3.fromRGB(192, 150, 230);
+	mini.Font = "SourceSans";
+	mini.Size = UDim2.new(0, 45, 0, 28);
+	mini.Text = "-";
+	mini.TextSize = 40;
+	mini.Position = UDim2.new(0, 44, -1, 27);
+	mini2.Name = "minimize2";
+	mini2.Parent = main.Frame;
+	mini2.BackgroundColor3 = Color3.fromRGB(192, 150, 230);
+	mini2.Font = "SourceSans";
+	mini2.Size = UDim2.new(0, 45, 0, 28);
+	mini2.Text = "+";
+	mini2.TextSize = 40;
+	mini2.Position = UDim2.new(0, 44, -1, 57);
+	mini2.Visible = false;
+	speeds = 1;
+	local speaker = game:GetService("Players").LocalPlayer;
+	local chr = game.Players.LocalPlayer.Character;
+	local hum = chr and chr:FindFirstChildWhichIsA("Humanoid");
+	nowe = false;
+	Frame.Active = true;
+	Frame.Draggable = true;
+	onof.MouseButton1Down:connect(function()
+		if (nowe == true) then
+			local FlatIdent_61585 = 0;
+			while true do
+				if (FlatIdent_61585 == 3) then
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding, true);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, true);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running, true);
+					FlatIdent_61585 = 4;
+				end
+				if (FlatIdent_61585 == 4) then
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics, true);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics, true);
+					FlatIdent_61585 = 5;
+				end
+				if (5 == FlatIdent_61585) then
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming, true);
+					speaker.Character.Humanoid:ChangeState(Enum.HumanoidStateType.RunningNoPhysics);
+					break;
+				end
+				if (FlatIdent_61585 == 0) then
+					nowe = false;
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, true);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown, true);
+					FlatIdent_61585 = 1;
+				end
+				if (FlatIdent_61585 == 2) then
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, true);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed, true);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics, true);
+					FlatIdent_61585 = 3;
+				end
+				if (FlatIdent_61585 == 1) then
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying, true);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall, true);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp, true);
+					FlatIdent_61585 = 2;
+				end
+			end
+		else
+			local FlatIdent_15F29 = 0;
+			local Char;
+			local Hum;
+			while true do
+				if (0 == FlatIdent_15F29) then
+					nowe = true;
+					for i = 1, speeds do
+						spawn(function()
+							local FlatIdent_49AED = 0;
+							local hb;
+							local chr;
+							local hum;
+							while true do
+								if (FlatIdent_49AED == 0) then
+									hb = game:GetService("RunService").Heartbeat;
+									tpwalking = true;
+									FlatIdent_49AED = 1;
+								end
+								if (FlatIdent_49AED == 2) then
+									while tpwalking and hb:Wait() and chr and hum and hum.Parent do
+										if (hum.MoveDirection.Magnitude > 0) then
+											chr:TranslateBy(hum.MoveDirection);
+										end
+									end
+									break;
+								end
+								if (FlatIdent_49AED == 1) then
+									chr = game.Players.LocalPlayer.Character;
+									hum = chr and chr:FindFirstChildWhichIsA("Humanoid");
+									FlatIdent_49AED = 2;
+								end
+							end
+						end);
+					end
+					game.Players.LocalPlayer.Character.Animate.Disabled = true;
+					Char = game.Players.LocalPlayer.Character;
+					FlatIdent_15F29 = 1;
+				end
+				if (FlatIdent_15F29 == 1) then
+					Hum = Char:FindFirstChildOfClass("Humanoid") or Char:FindFirstChildOfClass("AnimationController");
+					for i, v in next, Hum:GetPlayingAnimationTracks() do
+						v:AdjustSpeed(0);
+					end
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown, false);
+					FlatIdent_15F29 = 2;
+				end
+				if (FlatIdent_15F29 == 5) then
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming, false);
+					speaker.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Swimming);
+					break;
+				end
+				if (FlatIdent_15F29 == 2) then
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, false);
+					FlatIdent_15F29 = 3;
+				end
+				if (4 == FlatIdent_15F29) then
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics, false);
+					FlatIdent_15F29 = 5;
+				end
+				if (3 == FlatIdent_15F29) then
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding, false);
+					speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, false);
+					FlatIdent_15F29 = 4;
+				end
+			end
+		end
+		if (game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").RigType == Enum.HumanoidRigType.R6) then
+			local plr = game.Players.LocalPlayer;
+			local torso = plr.Character.Torso;
+			local flying = true;
+			local deb = true;
+			local ctrl = {f=0,b=0,l=0,r=0};
+			local lastctrl = {f=0,b=0,l=0,r=0};
+			local maxspeed = 50;
+			local speed = 0;
+			local bg = Instance.new("BodyGyro", torso);
+			bg.P = 90000;
+			bg.maxTorque = Vector3.new(8999999488, 8999999488, 8999999488);
+			bg.cframe = torso.CFrame;
+			local bv = Instance.new("BodyVelocity", torso);
+			bv.velocity = Vector3.new(0, 0.1, 0);
+			bv.maxForce = Vector3.new(8999999488, 8999999488, 8999999488);
+			if (nowe == true) then
+				plr.Character.Humanoid.PlatformStand = true;
+			end
+			while (nowe == true) or (game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0) do
+				local FlatIdent_61F8E = 0;
+				while true do
+					if (1 == FlatIdent_61F8E) then
+						if (((ctrl.l + ctrl.r) ~= 0) or ((ctrl.f + ctrl.b) ~= 0)) then
+							local FlatIdent_2C0A2 = 0;
+							while true do
+								if (FlatIdent_2C0A2 == 0) then
+									bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f + ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l + ctrl.r, (ctrl.f + ctrl.b) * 0.2, 0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * speed;
+									lastctrl = {f=ctrl.f,b=ctrl.b,l=ctrl.l,r=ctrl.r};
+									break;
+								end
+							end
+						elseif (((ctrl.l + ctrl.r) == 0) and ((ctrl.f + ctrl.b) == 0) and (speed ~= 0)) then
+							bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f + lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l + lastctrl.r, (lastctrl.f + lastctrl.b) * 0.2, 0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * speed;
+						else
+							bv.velocity = Vector3.new(0, 0, 0);
+						end
+						bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad(((ctrl.f + ctrl.b) * 50 * speed) / maxspeed), 0, 0);
+						break;
+					end
+					if (FlatIdent_61F8E == 0) then
+						game:GetService("RunService").RenderStepped:Wait();
+						if (((ctrl.l + ctrl.r) ~= 0) or ((ctrl.f + ctrl.b) ~= 0)) then
+							local FlatIdent_7993F = 0;
+							while true do
+								if (FlatIdent_7993F == 0) then
+									speed = speed + 0.5 + (speed / maxspeed);
+									if (speed > maxspeed) then
+										speed = maxspeed;
+									end
+									break;
+								end
+							end
+						elseif (not (((ctrl.l + ctrl.r) ~= 0) or ((ctrl.f + ctrl.b) ~= 0)) and (speed ~= 0)) then
+							local FlatIdent_6A83E = 0;
+							while true do
+								if (FlatIdent_6A83E == 0) then
+									speed = speed - 1;
+									if (speed < 0) then
+										speed = 0;
+									end
+									break;
+								end
+							end
+						end
+						FlatIdent_61F8E = 1;
+					end
+				end
+			end
+			ctrl = {f=0,b=0,l=0,r=0};
+			lastctrl = {f=0,b=0,l=0,r=0};
+			speed = 0;
+			bg:Destroy();
+			bv:Destroy();
+			plr.Character.Humanoid.PlatformStand = false;
+			game.Players.LocalPlayer.Character.Animate.Disabled = false;
+			tpwalking = false;
+		else
+			local plr = game.Players.LocalPlayer;
+			local UpperTorso = plr.Character.UpperTorso;
+			local flying = true;
+			local deb = true;
+			local ctrl = {f=0,b=0,l=0,r=0};
+			local lastctrl = {f=0,b=0,l=0,r=0};
+			local maxspeed = 50;
+			local speed = 0;
+			local bg = Instance.new("BodyGyro", UpperTorso);
+			bg.P = 90000;
+			bg.maxTorque = Vector3.new(8999999488, 8999999488, 8999999488);
+			bg.cframe = UpperTorso.CFrame;
+			local bv = Instance.new("BodyVelocity", UpperTorso);
+			bv.velocity = Vector3.new(0, 0.1, 0);
+			bv.maxForce = Vector3.new(8999999488, 8999999488, 8999999488);
+			if (nowe == true) then
+				plr.Character.Humanoid.PlatformStand = true;
+			end
+			while (nowe == true) or (game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0) do
+				local FlatIdent_2D2B8 = 0;
+				while true do
+					if (FlatIdent_2D2B8 == 1) then
+						if (((ctrl.l + ctrl.r) ~= 0) or ((ctrl.f + ctrl.b) ~= 0)) then
+							local FlatIdent_29B3D = 0;
+							while true do
+								if (FlatIdent_29B3D == 0) then
+									bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f + ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l + ctrl.r, (ctrl.f + ctrl.b) * 0.2, 0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * speed;
+									lastctrl = {f=ctrl.f,b=ctrl.b,l=ctrl.l,r=ctrl.r};
+									break;
+								end
+							end
+						elseif (((ctrl.l + ctrl.r) == 0) and ((ctrl.f + ctrl.b) == 0) and (speed ~= 0)) then
+							bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f + lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l + lastctrl.r, (lastctrl.f + lastctrl.b) * 0.2, 0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * speed;
+						else
+							bv.velocity = Vector3.new(0, 0, 0);
+						end
+						bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad(((ctrl.f + ctrl.b) * 50 * speed) / maxspeed), 0, 0);
+						break;
+					end
+					if (FlatIdent_2D2B8 == 0) then
+						wait();
+						if (((ctrl.l + ctrl.r) ~= 0) or ((ctrl.f + ctrl.b) ~= 0)) then
+							local FlatIdent_3416F = 0;
+							while true do
+								if (FlatIdent_3416F == 0) then
+									speed = speed + 0.5 + (speed / maxspeed);
+									if (speed > maxspeed) then
+										speed = maxspeed;
+									end
+									break;
+								end
+							end
+						elseif (not (((ctrl.l + ctrl.r) ~= 0) or ((ctrl.f + ctrl.b) ~= 0)) and (speed ~= 0)) then
+							local FlatIdent_15354 = 0;
+							while true do
+								if (FlatIdent_15354 == 0) then
+									speed = speed - 1;
+									if (speed < 0) then
+										speed = 0;
+									end
+									break;
+								end
+							end
+						end
+						FlatIdent_2D2B8 = 1;
+					end
+				end
+			end
+			ctrl = {f=0,b=0,l=0,r=0};
+			lastctrl = {f=0,b=0,l=0,r=0};
+			speed = 0;
+			bg:Destroy();
+			bv:Destroy();
+			plr.Character.Humanoid.PlatformStand = false;
+			game.Players.LocalPlayer.Character.Animate.Disabled = false;
+			tpwalking = false;
+		end
+	end);
+	local tis;
+	up.MouseButton1Down:connect(function()
+		tis = up.MouseEnter:connect(function()
+			while tis do
+				local FlatIdent_3EEE1 = 0;
+				while true do
+					if (FlatIdent_3EEE1 == 0) then
+						wait();
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 1, 0);
+						break;
+					end
+				end
+			end
+		end);
+	end);
+	up.MouseLeave:connect(function()
+		if tis then
+			tis:Disconnect();
+			tis = nil;
+		end
+	end);
+	local dis;
+	down.MouseButton1Down:connect(function()
+		dis = down.MouseEnter:connect(function()
+			while dis do
+				local FlatIdent_39764 = 0;
+				while true do
+					if (FlatIdent_39764 == 0) then
+						wait();
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -1, 0);
+						break;
+					end
+				end
+			end
+		end);
+	end);
+	down.MouseLeave:connect(function()
+		if dis then
+			local FlatIdent_494DF = 0;
+			while true do
+				if (FlatIdent_494DF == 0) then
+					dis:Disconnect();
+					dis = nil;
+					break;
+				end
+			end
+		end
+	end);
+	game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(char)
+		local FlatIdent_27404 = 0;
+		while true do
+			if (FlatIdent_27404 == 1) then
+				game.Players.LocalPlayer.Character.Animate.Disabled = false;
+				break;
+			end
+			if (FlatIdent_27404 == 0) then
+				wait(0.7);
+				game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false;
+				FlatIdent_27404 = 1;
+			end
+		end
+	end);
+	plus.MouseButton1Down:connect(function()
+		local FlatIdent_2A862 = 0;
+		while true do
+			if (FlatIdent_2A862 == 1) then
+				if (nowe == true) then
+					local FlatIdent_8B523 = 0;
+					while true do
+						if (FlatIdent_8B523 == 0) then
+							tpwalking = false;
+							for i = 1, speeds do
+								spawn(function()
+									local FlatIdent_89C1C = 0;
+									local hb;
+									local chr;
+									local hum;
+									while true do
+										if (FlatIdent_89C1C == 0) then
+											hb = game:GetService("RunService").Heartbeat;
+											tpwalking = true;
+											FlatIdent_89C1C = 1;
+										end
+										if (FlatIdent_89C1C == 2) then
+											while tpwalking and hb:Wait() and chr and hum and hum.Parent do
+												if (hum.MoveDirection.Magnitude > 0) then
+													chr:TranslateBy(hum.MoveDirection);
+												end
+											end
+											break;
+										end
+										if (FlatIdent_89C1C == 1) then
+											chr = game.Players.LocalPlayer.Character;
+											hum = chr and chr:FindFirstChildWhichIsA("Humanoid");
+											FlatIdent_89C1C = 2;
+										end
+									end
+								end);
+							end
+							break;
+						end
+					end
+				end
+				break;
+			end
+			if (FlatIdent_2A862 == 0) then
+				speeds = speeds + 1;
+				speed.Text = speeds;
+				FlatIdent_2A862 = 1;
+			end
+		end
+	end);
+	mine.MouseButton1Down:connect(function()
+		if (speeds == 1) then
+			local FlatIdent_20FB0 = 0;
+			while true do
+				if (0 == FlatIdent_20FB0) then
+					speed.Text = "不能小于1";
+					wait(1);
+					FlatIdent_20FB0 = 1;
+				end
+				if (FlatIdent_20FB0 == 1) then
+					speed.Text = speeds;
+					break;
+				end
+			end
+		else
+			local FlatIdent_89237 = 0;
+			while true do
+				if (FlatIdent_89237 == 0) then
+					speeds = speeds - 1;
+					speed.Text = speeds;
+					FlatIdent_89237 = 1;
+				end
+				if (FlatIdent_89237 == 1) then
+					if (nowe == true) then
+						local FlatIdent_6C51A = 0;
+						while true do
+							if (FlatIdent_6C51A == 0) then
+								tpwalking = false;
+								for i = 1, speeds do
+									spawn(function()
+										local FlatIdent_5B2CE = 0;
+										local hb;
+										local chr;
+										local hum;
+										while true do
+											if (FlatIdent_5B2CE == 1) then
+												chr = game.Players.LocalPlayer.Character;
+												hum = chr and chr:FindFirstChildWhichIsA("Humanoid");
+												FlatIdent_5B2CE = 2;
+											end
+											if (FlatIdent_5B2CE == 2) then
+												while tpwalking and hb:Wait() and chr and hum and hum.Parent do
+													if (hum.MoveDirection.Magnitude > 0) then
+														chr:TranslateBy(hum.MoveDirection);
+													end
+												end
+												break;
+											end
+											if (FlatIdent_5B2CE == 0) then
+												hb = game:GetService("RunService").Heartbeat;
+												tpwalking = true;
+												FlatIdent_5B2CE = 1;
+											end
+										end
+									end);
+								end
+								break;
+							end
+						end
+					end
+					break;
+				end
+			end
+		end
+	end);
+	closebutton.MouseButton1Click:Connect(function()
+		main:Destroy();
+	end);
+	mini.MouseButton1Click:Connect(function()
+		local FlatIdent_47ABB = 0;
+		while true do
+			if (2 == FlatIdent_47ABB) then
+				speed.Visible = false;
+				mine.Visible = false;
+				FlatIdent_47ABB = 3;
+			end
+			if (FlatIdent_47ABB == 4) then
+				main.Frame.BackgroundTransparency = 1;
+				closebutton.Position = UDim2.new(0, 0, -1, 57);
+				break;
+			end
+			if (FlatIdent_47ABB == 0) then
+				up.Visible = false;
+				down.Visible = false;
+				FlatIdent_47ABB = 1;
+			end
+			if (FlatIdent_47ABB == 1) then
+				onof.Visible = false;
+				plus.Visible = false;
+				FlatIdent_47ABB = 2;
+			end
+			if (3 == FlatIdent_47ABB) then
+				mini.Visible = false;
+				mini2.Visible = true;
+				FlatIdent_47ABB = 4;
+			end
+		end
+	end);
+	mini2.MouseButton1Click:Connect(function()
+		local FlatIdent_494F6 = 0;
+		while true do
+			if (FlatIdent_494F6 == 4) then
+				main.Frame.BackgroundTransparency = 0;
+				closebutton.Position = UDim2.new(0, 0, -1, 27);
+				break;
+			end
+			if (FlatIdent_494F6 == 2) then
+				speed.Visible = true;
+				mine.Visible = true;
+				FlatIdent_494F6 = 3;
+			end
+			if (FlatIdent_494F6 == 3) then
+				mini.Visible = true;
+				mini2.Visible = false;
+				FlatIdent_494F6 = 4;
+			end
+			if (FlatIdent_494F6 == 0) then
+				up.Visible = true;
+				down.Visible = true;
+				FlatIdent_494F6 = 1;
+			end
+			if (FlatIdent_494F6 == 1) then
+				onof.Visible = true;
+				plus.Visible = true;
+				FlatIdent_494F6 = 2;
+			end
+		end
+	end);
+	Library:Notify("加载成功", 5);
+end});
+local VisualSection = Tabs.Main:AddRightGroupbox("視覺設置", "eye");
+VisualSection:AddSlider("FOV", {Text="廣角 (FOV)",Default=70,Min=30,Max=120,Rounding=0,Callback=function(v)
+	workspace.CurrentCamera.FieldOfView = v;
+end});
+VisualSection:AddToggle("NightVision", {Text="夜視模式",Default=false,Callback=function(v)
+	if v then
+		EnableNightVision();
+	else
+		DisableNightVision();
+	end
+end});
+local AimbotSection = Tabs.Gun:AddLeftGroupbox("自瞄設置", "target");
+local aimbotEnabled = false;
+local aimbotConn;
+local aimPart = "Head";
+local teamCheck = true;
+local wallCheck = true;
+local fovRadius = 150;
+local smoothing = 0.2;
+local alwaysAimMobile = true;
+local fovCircle = Drawing.new("Circle");
+fovCircle.Visible = false;
+fovCircle.Thickness = 2;
+fovCircle.Color = Color3.fromRGB(255, 0, 0);
+fovCircle.Radius = fovRadius;
+fovCircle.NumSides = 100;
+fovCircle.Filled = false;
+local function isVisible(part)
+	if not wallCheck then
+		return true;
+	end
+	local cam = workspace.CurrentCamera;
+	local origin = cam.CFrame.Position;
+	local dir = part.Position - origin;
+	local params = RaycastParams.new();
+	params.FilterDescendantsInstances = {LP.Character};
+	params.FilterType = Enum.RaycastFilterType.Blacklist;
+	local res = workspace:Raycast(origin, dir, params);
+	return not res or res.Instance:IsDescendantOf(part.Parent);
+end
+local function getClosest()
+	local cam = workspace.CurrentCamera;
+	local mouse = UserInputService:GetMouseLocation();
+	local closest, dist = nil, fovRadius;
+	for _, plr in Players:GetPlayers() do
+		if ((plr ~= LP) and plr.Character) then
+			local FlatIdent_20FE3 = 0;
+			local hum;
+			while true do
+				if (FlatIdent_20FE3 == 0) then
+					hum = plr.Character:FindFirstChildOfClass("Humanoid");
+					if (hum and (hum.Health > 0) and plr.Character:FindFirstChild(aimPart)) then
+						local FlatIdent_578E3 = 0;
+						local part;
+						local pos;
+						local onScreen;
+						while true do
+							if (FlatIdent_578E3 == 0) then
+								if (teamCheck and (plr.Team == LP.Team)) then
+									continue;
+								end
+								part = plr.Character[aimPart];
+								FlatIdent_578E3 = 1;
+							end
+							if (FlatIdent_578E3 == 1) then
+								pos, onScreen = cam:WorldToViewportPoint(part.Position);
+								if onScreen then
+									local FlatIdent_40070 = 0;
+									local d;
+									while true do
+										if (FlatIdent_40070 == 0) then
+											d = (Vector2.new(pos.X, pos.Y) - mouse).Magnitude;
+											if ((d < dist) and isVisible(part)) then
+												dist = d;
+												closest = part;
+											end
+											break;
+										end
+									end
+								end
+								break;
+							end
+						end
+					end
+					break;
+				end
+			end
+		end
+	end
+	return closest;
+end
+AimbotSection:AddToggle("AimbotEnable", {Text="啟用自瞄 + FOV圈",Default=false,Callback=function(v)
+	local FlatIdent_86900 = 0;
+	while true do
+		if (1 == FlatIdent_86900) then
+			if v then
+				aimbotConn = RunService.RenderStepped:Connect(function()
+					local FlatIdent_91B54 = 0;
+					local shouldAim;
+					local target;
+					while true do
+						if (FlatIdent_91B54 == 0) then
+							fovCircle.Position = UserInputService:GetMouseLocation();
+							shouldAim = UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) or (UserInputService.TouchEnabled and alwaysAimMobile);
+							FlatIdent_91B54 = 1;
+						end
+						if (FlatIdent_91B54 == 2) then
+							if target then
+								local cam = workspace.CurrentCamera;
+								local cf = cam.CFrame;
+								local dir = (target.Position - cf.Position).Unit;
+								cam.CFrame = cf:Lerp(CFrame.new(cf.Position, cf.Position + (dir * 100)), smoothing);
+							end
+							break;
+						end
+						if (FlatIdent_91B54 == 1) then
+							if not shouldAim then
+								return;
+							end
+							target = getClosest();
+							FlatIdent_91B54 = 2;
+						end
+					end
+				end);
+			elseif aimbotConn then
+				local FlatIdent_331F0 = 0;
+				while true do
+					if (FlatIdent_331F0 == 0) then
+						aimbotConn:Disconnect();
+						aimbotConn = nil;
+						break;
+					end
+				end
+			end
+			break;
+		end
+		if (FlatIdent_86900 == 0) then
+			aimbotEnabled = v;
+			fovCircle.Visible = v;
+			FlatIdent_86900 = 1;
+		end
+	end
+end});
+AimbotSection:AddSlider("FOVRadius", {Text="FOV 半徑",Default=150,Min=50,Max=400,Rounding=0,Callback=function(v)
+	local FlatIdent_53124 = 0;
+	while true do
+		if (FlatIdent_53124 == 0) then
+			fovRadius = v;
+			fovCircle.Radius = v;
+			break;
+		end
+	end
+end});
+AimbotSection:AddSlider("Smoothing", {Text="平滑度",Default=0.2,Min=0.05,Max=1,Rounding=2,Callback=function(v)
+	smoothing = v;
+end});
+AimbotSection:AddToggle("WallCheck", {Text="牆透檢查",Default=true,Callback=function(v)
+	wallCheck = v;
+end});
+AimbotSection:AddToggle("TeamCheck", {Text="隊友檢查",Default=true,Callback=function(v)
+	teamCheck = v;
+end});
+AimbotSection:AddToggle("AlwaysMobile", {Text="手機端一直瞄準",Default=true,Callback=function(v)
+	alwaysAimMobile = v;
+end});
+local SeamGroup = Tabs.Seam:AddLeftGroupbox("縫合腳本", "puzzle");
+SeamGroup:AddButton({Text="載入 IY (Infinite Yield)",Func=function()
+	local FlatIdent_44603 = 0;
+	while true do
+		if (FlatIdent_44603 == 0) then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))();
+			Library:Notify("IY 已載入", 3);
+			break;
+		end
+	end
+end});
+SeamGroup:AddButton({Text="載入 wx 腳本",Func=function()
+	local FlatIdent_5724B = 0;
+	while true do
+		if (0 == FlatIdent_5724B) then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/youyu665/WX-HUB/refs/heads/main/WX.lua"))();
+			Library:Notify("wx 已載入", 3);
+			break;
+		end
+	end
+end});
+SeamGroup:AddButton({Text="載入 XK Hub",Func=function()
+	local FlatIdent_8E5B4 = 0;
+	while true do
+		if (FlatIdent_8E5B4 == 0) then
+			loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-XK-Hub-76803"))();
+			Library:Notify("XK Hub 已載入", 3);
+			break;
+		end
+	end
+end});
+SeamGroup:AddButton({Text="載入 劉某腳本",Func=function()
+	local FlatIdent_7873D = 0;
+	while true do
+		if (FlatIdent_7873D == 0) then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/liuliuqiang404-code/6/refs/heads/main/劉某腳本加減速"))();
+			Library:Notify("劉某已載入", 3);
+			break;
+		end
+	end
+end});
+SeamGroup:AddButton({Text="載入神秘腳本",Func=function()
+	local FlatIdent_2F3FA = 0;
+	while true do
+		if (FlatIdent_2F3FA == 0) then
+			loadstring(game:HttpGet("https://pastebin.com/raw/Up3P2KBp"))();
+			Library:Notify("神秘腳本已載入", 3);
+			break;
+		end
+	end
+end});
+SeamGroup:AddButton({Text="載入 tx 腳本",Func=function()
+	local FlatIdent_8638E = 0;
+	while true do
+		if (FlatIdent_8638E == 0) then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/JsYb666/TX-Free-YYDS/refs/heads/main/FREE-TX-TEAM"))();
+			Library:Notify("tx 已載入", 3);
+			break;
+		end
+	end
+end});
+SeamGroup:AddButton({Text="載入甩飛全圖腳本",Func=function()
+	local FlatIdent_8FBAE = 0;
+	while true do
+		if (FlatIdent_8FBAE == 0) then
+			loadstring(game:HttpGet("https://pastebin.com/raw/zqyDSUWX"))();
+			Library:Notify("甩飛全圖已載入", 3);
+			break;
+		end
+	end
+end});
+local BladeGroup = Tabs.BladeBall:AddLeftGroupbox("刀刃球功能", "swords");
+BladeGroup:AddButton({Text="載入 Blade Ball 格擋 V4",Func=function()
+	local FlatIdent_44100 = 0;
+	while true do
+		if (FlatIdent_44100 == 0) then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/Hosvile/Refinement/main/MC%3ABlade%20Ball%20Parry%20V4.0.0", true))();
+			Library:Notify("刀球格擋 V4 已載入", 3);
+			break;
+		end
+	end
+end});
+local LcGroup = Tabs.Lc:AddLeftGroupbox("LC 相關功能", "user");
+LcGroup:AddButton({Text="載入 LC 腳本",Func=function()
+	local FlatIdent_4D83A = 0;
+	while true do
+		if (FlatIdent_4D83A == 0) then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/yuanshenqdon/Script/refs/heads/main/LC.lua"))();
+			Library:Notify("LC 腳本已載入", 3);
+			break;
+		end
+	end
+end});
+local BattlefieldGroup = Tabs.Battlefield:AddLeftGroupbox("戰場功能", "sword");
+BattlefieldGroup:AddButton({Text="無敵垃圾桶",Func=function()
+	local FlatIdent_7EE98 = 0;
+	while true do
+		if (FlatIdent_7EE98 == 0) then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man", true))();
+			Library:Notify("無敵垃圾桶已載入", 5);
+			break;
+		end
+	end
+end});
+local MenuGroup = Tabs.UI:AddLeftGroupbox("菜單設置", "settings");
+MenuGroup:AddToggle("CustomCursor", {Text="啟用自定義光標",Default=true,Callback=function(v)
+	Library.ShowCustomCursor = v;
+end});
+MenuGroup:AddDropdown("NotifySide", {Values={"Left","Right"},Default="Right",Text="通知顯示位置",Callback=function(v)
+	Library:SetNotifySide(v);
+end});
+MenuGroup:AddButton("卸載腳本", function()
+	Library:Unload();
+end);
+ThemeManager:SetLibrary(Library);
+SaveManager:SetLibrary(Library);
+SaveManager:IgnoreThemeSettings();
+ThemeManager:SetFolder("ChenMoScript");
+SaveManager:SetFolder("ChenMoScript/Game");
+SaveManager:BuildConfigSection(Tabs.UI);
+ThemeManager:ApplyToTab(Tabs.UI);
+SaveManager:LoadAutoloadConfig();
+print("陳某腳本完整版載入完成 - 所有 Tab 已補齊");
+Library:Notify("完整版腳本已載入（含所有 Tab 功能）", 8);
