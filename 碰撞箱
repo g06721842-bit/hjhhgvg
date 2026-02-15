@@ -1,0 +1,58 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local gameMode = "FFA"
+
+-- 核心处理函数
+local function processCharacter(character)
+    if not character then return end
+    
+    -- 等待角色基本部件加载
+    local hrp = character:WaitForChild("HumanoidRootPart", 8)
+    if not hrp then return end
+    
+    -- 针对 R15
+    local upperTorso = character:FindFirstChild("UpperTorso")
+    local head = character:FindFirstChild("Head")
+    
+    if gameMode == "FFA" then
+        if upperTorso and upperTorso:IsA("BasePart") then
+            upperTorso.CanCollide = false
+            upperTorso.Transparency = 0.6
+            upperTorso.Size = Vector3.new(21, 21, 21)
+        end
+        
+        if head and head:IsA("BasePart") then
+            head.CanCollide = false
+            head.Transparency = 0.6
+            head.Size = Vector3.new(21, 21, 21)
+        end
+        
+        if hrp and hrp:IsA("BasePart") then
+            hrp.CanCollide = false
+            hrp.Transparency = 0.6
+            hrp.Size = Vector3.new(21, 21, 21)
+        end
+    end
+end
+
+-- 处理单个玩家的函数
+local function setupPlayer(player)
+    if player == LocalPlayer then return end
+    
+    -- 已有角色就立刻处理
+    if player.Character then
+        processCharacter(player.Character)
+    end
+    
+    -- 以后每次重生/加入都处理
+    player.CharacterAdded:Connect(processCharacter)
+end
+
+-- 处理当前所有玩家
+for _, player in ipairs(Players:GetPlayers()) do
+    setupPlayer(player)
+end
+
+-- 监听新加入的玩家
+Players.PlayerAdded:Connect(setupPlayer)
