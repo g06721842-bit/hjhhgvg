@@ -1,24 +1,32 @@
--- k00pkidd770 gui f3x (反踢出优化版 - 添加延时/debounce)
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "k00pkidd770_gui_f3x"
-ScreenGui.Parent = game.CoreGui
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+-- k00pkid770 gui f3x - SAFE MODE 2025 (防nil + 强防踢 + 错误捕获)
 
--- Khung chính
+-- Executor 兼容保护（防止 attempt to call nil）
+if not getgenv then getgenv = function() return {} end end
+getgenv().k00pkid_safe = getgenv().k00pkid_safe or {}
+if getgenv().k00pkid_safe.loaded then return end  -- 防止重复加载导致循环报错
+getgenv().k00pkid_safe.loaded = true
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "k00pkidd770_gui_f3x_SAFE"
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
+
+-- 主框架
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-MainFrame.Size = UDim2.new(0, 500, 0, 450) 
-MainFrame.Position = UDim2.new(0.5, -250, 0.5, -225) 
+MainFrame.Size = UDim2.new(0, 500, 0, 450)
+MainFrame.Position = UDim2.new(0.5, -250, 0.5, -225)
 MainFrame.Active = true
-MainFrame.Draggable = true 
+MainFrame.Draggable = true
 
 local MainCorner = Instance.new("UICorner")
 MainCorner.CornerRadius = UDim.new(0, 12)
 MainCorner.Parent = MainFrame
 
--- Tiêu đề Script
+-- 标题（绿色 = 已优化）
 local ScriptTitle = Instance.new("TextLabel")
 ScriptTitle.Name = "ScriptTitle"
 ScriptTitle.Parent = MainFrame
@@ -26,24 +34,15 @@ ScriptTitle.BackgroundTransparency = 1
 ScriptTitle.Position = UDim2.new(0, 100, 0, 7)
 ScriptTitle.Size = UDim2.new(0, 300, 0, 32)
 ScriptTitle.Font = Enum.Font.GothamBold
-ScriptTitle.Text = "k00pkid770 gui f3x - ANTI-KICK"
-ScriptTitle.TextColor3 = Color3.fromRGB(0, 255, 0)  -- Xanh lá = Anti-kick
+ScriptTitle.Text = "k00pkid770 gui f3x - SAFE MODE"
+ScriptTitle.TextColor3 = Color3.fromRGB(0, 255, 100)
 ScriptTitle.TextSize = 16
 
--- 🔥 全局防连点 + 延时系统
-local Debounce = {}  -- 每个按钮独立防抖
-local function SafeWait(time) task.wait(math.random(time*0.8, time*1.2)) end  -- 随机延时，更自然
-local function AddDelay(remoteFunc, ...)
-    -- 所有remote调用前自动延时0.3-0.6s
-    SafeWait(0.4)
-    return remoteFunc(...)
-end
-
--- Hiệu ứng glow
+-- Glow 效果
 local function MakeGlow(button)
     local originalColor = Color3.fromRGB(50, 50, 50)
     button.MouseButton1Down:Connect(function()
-        button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        button.BackgroundColor3 = Color3.fromRGB(200, 255, 200)
         button.TextColor3 = Color3.fromRGB(0, 0, 0)
     end)
     button.MouseButton1Up:Connect(function()
@@ -52,7 +51,7 @@ local function MakeGlow(button)
     end)
 end
 
--- Tạo nút (带防抖)
+-- 创建按钮函数
 local function CreateBtn(name, pos, size)
     local btn = Instance.new("TextButton")
     btn.Name = name .. "Btn"
@@ -63,7 +62,7 @@ local function CreateBtn(name, pos, size)
     btn.Font = Enum.Font.GothamBold
     btn.Text = name
     btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.TextSize = 10 
+    btn.TextSize = 10
     btn.AutoButtonColor = false
     local corner = Instance.new("UICorner")
     corner.CornerRadius = UDim.new(0, 8)
@@ -72,138 +71,142 @@ local function CreateBtn(name, pos, size)
     return btn
 end
 
--- Các nút
+-- 按钮布局
 local bSize = UDim2.new(0, 115, 0, 55)
-local BtoolsBtn = CreateBtn("B工具 / 建筑工具", UDim2.new(0, 7, 0, 7), UDim2.new(0, 95, 0, 32))
-local ReBtn = CreateBtn("重生 / 重置", UDim2.new(1, -102, 0, 7), UDim2.new(0, 95, 0, 32))
-local DecalBtn = CreateBtn("贴图轰炸 / 全图贴图", UDim2.new(0, 10, 0, 65), bSize)
-local SkyboxBtn = CreateBtn("天空盒 / 旋转天空", UDim2.new(0, 133, 0, 65), bSize)
-local R6Btn = CreateBtn("R6", UDim2.new(0, 256, 0, 65), bSize)
-local HintBtn = CreateBtn("顶部提示", UDim2.new(0, 379, 0, 65), bSize)
-local MessageBtn = CreateBtn("全屏消息", UDim2.new(0, 10, 0, 130), bSize)
-local CharAllBtn = CreateBtn("全员变身", UDim2.new(0, 133, 0, 130), bSize)
-local DiscoBtn = CreateBtn("迪斯科 / 彩虹灯", UDim2.new(0, 256, 0, 130), bSize)
-local FireAllBtn = CreateBtn("全员着火", UDim2.new(0, 379, 0, 130), bSize)
+local BtoolsBtn    = CreateBtn("B工具 / 建筑工具", UDim2.new(0, 7, 0, 7),   UDim2.new(0, 95, 0, 32))
+local ReBtn        = CreateBtn("重生 / 重置",       UDim2.new(1, -102, 0, 7), UDim2.new(0, 95, 0, 32))
+local DecalBtn     = CreateBtn("贴图轰炸 / 全图贴图", UDim2.new(0, 10, 0, 65), bSize)
+local SkyboxBtn    = CreateBtn("天空盒 / 旋转天空",   UDim2.new(0, 133, 0, 65), bSize)
+local R6Btn        = CreateBtn("R6",                  UDim2.new(0, 256, 0, 65), bSize)
+local HintBtn      = CreateBtn("顶部提示",            UDim2.new(0, 379, 0, 65), bSize)
+local MessageBtn   = CreateBtn("全屏消息",            UDim2.new(0, 10, 0, 130), bSize)
+local CharAllBtn   = CreateBtn("全员变身",            UDim2.new(0, 133, 0, 130), bSize)
+local DiscoBtn     = CreateBtn("迪斯科 / 彩虹灯",     UDim2.new(0, 256, 0, 130), bSize)
+local FireAllBtn   = CreateBtn("全员着火",            UDim2.new(0, 379, 0, 130), bSize)
 
--- Music Label
 local MusicLabel = Instance.new("TextLabel")
 MusicLabel.Parent = MainFrame
 MusicLabel.BackgroundTransparency = 1
-MusicLabel.Position = UDim2.new(0, 0, 0, 185) 
+MusicLabel.Position = UDim2.new(0, 0, 0, 185)
 MusicLabel.Size = UDim2.new(1, 0, 0, 100)
 MusicLabel.Font = Enum.Font.GothamBold
 MusicLabel.Text = "music"
 MusicLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 MusicLabel.TextSize = 85
 
--- Hàng 3
 local y3 = 285
-local ThemeMeBtn = CreateBtn("主题音乐1", UDim2.new(0, 10, 0, y3), bSize)
-local JumpstyleBtn = CreateBtn("跳跃舞曲", UDim2.new(0, 133, 0, y3), bSize)
-local ToxicBtn = CreateBtn("毒性音乐", UDim2.new(0, 256, 0, y3), bSize)
-local WtfGoobyBtn = CreateBtn("诡异慢速音乐", UDim2.new(0, 379, 0, y3), bSize)
+local ThemeMeBtn   = CreateBtn("主题音乐1",    UDim2.new(0, 10, 0, y3), bSize)
+local JumpstyleBtn = CreateBtn("跳跃舞曲",     UDim2.new(0, 133, 0, y3), bSize)
+local ToxicBtn     = CreateBtn("毒性音乐",     UDim2.new(0, 256, 0, y3), bSize)
+local WtfGoobyBtn  = CreateBtn("诡异慢速音乐", UDim2.new(0, 379, 0, y3), bSize)
 
------------------------------------------------------------
--- ✅ 优化脚本 (添加延时 + 防连点)
------------------------------------------------------------
+-- ====================== 核心防踢工具 ======================
+
+local GLOBAL_COOLDOWN = 1.2   -- 全局冷却（秒）
+local lastUsed = 0
+
+local function CanUse()
+    local now = tick()
+    if now - lastUsed < GLOBAL_COOLDOWN then return false end
+    lastUsed = now
+    return true
+end
+
+local Debounces = {}  -- 每个按钮独立 debounce
+
+local function SafeInvoke(remote, ...)
+    if not remote or not remote.InvokeServer then return end
+    pcall(function()
+        task.wait(math.random(30, 60)/100)  -- 0.3\~0.6s 随机延时
+        remote:InvokeServer(...)
+    end)
+end
 
 -- HD Admin 安全调用
 local function SafeHD(cmd)
-    if Debounce.HD then return end  -- 全局HD防抖
-    Debounce.HD = true
-    SafeWait(0.5)  -- HD命令延时0.5s
-    local RequestCommand = game:GetService("ReplicatedStorage"):WaitForChild("HDAdminHDClient").Signals.RequestCommandSilent
-    AddDelay(function() RequestCommand:InvokeServer(cmd) end)
-    task.wait(1.2)  -- 冷却1.2s
-    Debounce.HD = false
+    if not CanUse() then return end
+    pcall(function()
+        local sig = game:GetService("ReplicatedStorage"):WaitForChild("HDAdminHDClient", 5)
+        if not sig then return end
+        local req = sig:FindFirstChild("Signals", true):FindFirstChild("RequestCommandSilent")
+        if req then
+            SafeInvoke(req, cmd)
+        end
+    end)
 end
 
--- 贴图轰炸 (优化循环 + 延时)
-DecalBtn.MouseButton1Click:Connect(function()
-    if Debounce.Decal then return end
-    Debounce.Decal = true
-    
-    local player = game.Players.LocalPlayer
-    local char = player.Character
-    local tool
-    for i,v in player:GetDescendants() do if v.Name == "SyncAPI" then tool = v.Parent end end
-    for i,v in game.ReplicatedStorage:GetDescendants() do if v.Name == "SyncAPI" then tool = v.Parent end end
-    local remote = tool.SyncAPI.ServerEndpoint
-    function _(args) AddDelay(function() remote:InvokeServer(unpack(args)) end) end
-    
-    function SetLocked(part,boolean) 
-        local args = {[1] = "SetLocked",[2] = {[1] = part},[3] = boolean} 
-        _(args) 
-    end
-    function SpawnDecal(part,side) 
-        local args = {[1] = "CreateTextures",[2] = {[1] = {["Part"] = part,["Face"] = side,["TextureType"] = "Decal"}}} 
-        _(args) 
-    end
-    function AddDecal(part,asset,side) 
-        local args = {[1] = "SyncTexture",[2] = {[1] = {["Part"] = part,["Face"] = side,["TextureType"] = "Decal",["Texture"] = "rbxassetid://".. asset}]} 
-        _(args) 
-    end
-    
-    function spam(id)
-        local parts = {}  -- 收集parts避免重复
-        for i,v in game.workspace:GetDescendants() do
-            if v:IsA("BasePart") and not parts[v] then
-                parts[v] = true
-                spawn(function()
-                    SetLocked(v,false)
-                    SafeWait(0.1)  -- 每个part延时0.1s
-                    for _, side in pairs(Enum.NormalId:GetEnumItems()) do
-                        SpawnDecal(v,side)
-                        SafeWait(0.05)  -- 每个面0.05s
-                        AddDecal(v,id,side)
+-- ====================== 按钮事件（全部包裹 pcall + debounce） ======================
+
+local function ConnectSafe(btn, func)
+    btn.MouseButton1Click:Connect(function()
+        if Debounces[btn] then return end
+        Debounces[btn] = true
+        pcall(func)  -- 捕获所有错误，防止崩溃重试
+        task.delay(1.5, function() Debounces[btn] = nil end)
+    end)
+end
+
+ConnectSafe(BtoolsBtn,    function() SafeHD(";btools me") end)
+ConnectSafe(ReBtn,        function() SafeHD(";re") end)
+ConnectSafe(R6Btn,        function() SafeHD(";r6") end)
+ConnectSafe(HintBtn,      function() SafeHD(";sh join team k00pkid770 today!!!") end)
+ConnectSafe(MessageBtn,   function() SafeHD(";sm join team k00pkid770 today!!!") end)
+ConnectSafe(CharAllBtn,   function() SafeHD(";char all k00pkid770") end)
+ConnectSafe(DiscoBtn,     function() SafeHD(";disco") end)
+ConnectSafe(FireAllBtn,   function() SafeHD(";fire all") end)
+
+ConnectSafe(ThemeMeBtn,   function() SafeHD(";music 110788401793874 ;volume inf") end)
+ConnectSafe(JumpstyleBtn, function() SafeHD(";music 1839246711 ;volume inf") end)
+ConnectSafe(ToxicBtn,     function() SafeHD(";music 86412047196482 ;volume inf") end)
+ConnectSafe(WtfGoobyBtn,  function() SafeHD(";music 113548699544058 ;volume inf ;pitch 0.1") end)
+
+-- 贴图轰炸（限制数量 + 延时）
+ConnectSafe(DecalBtn, function()
+    if not CanUse() then return end
+    pcall(function()
+        local remote = nil
+        for _, v in ipairs(game:GetDescendants()) do
+            if v.Name == "SyncAPI" and v:FindFirstChild("ServerEndpoint") then
+                remote = v.ServerEndpoint break
+            end
+        end
+        if not remote then return end
+
+        local function _(args) SafeInvoke(remote, unpack(args)) end
+
+        local count = 0
+        for _, part in ipairs(workspace:GetDescendants()) do
+            if part:IsA("BasePart") and count < 80 then  -- 限制最多80个零件
+                count = count + 1
+                pcall(function()
+                    _("SetLocked", {part}, false)
+                    task.wait(0.08)
+                    for _, face in pairs(Enum.NormalId:GetEnumItems()) do
+                        _("CreateTextures", {{Part = part, Face = face, TextureType = "Decal"}})
+                        task.wait(0.04)
+                        _("SyncTexture", {{Part = part, Face = face, TextureType = "Decal", Texture = "rbxassetid://119360779637179"}})
                     end
                 end)
-                SafeWait(0.2)  -- part间0.2s
+                task.wait(0.15)  -- 零件间延时
             end
-        end 
-    end
-    
-    SafeWait(0.3)  -- 启动延时
-    spawn(function() spam(119360779637179) end)
-    task.wait(3)  -- 总冷却3s
-    Debounce.Decal = false
+        end
+    end)
 end)
 
--- 天空盒 (优化旋转 + 延时)
-SkyboxBtn.MouseButton1Click:Connect(function()
-    if Debounce.Skybox then return end
-    Debounce.Skybox = true
-    
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    SafeHD(";unfog")
-    SafeWait(0.4)
-    SafeHD(";fogcolor black")
-    SafeWait(0.4)
-    SafeHD(";time 0")
-    
-    -- Skybox创建逻辑保持原样，但所有remote加延时
-    local player = game.Players.LocalPlayer
-    local char = player.Character
-    local tool
-    for i,v in player:GetDescendants() do if v.Name == "SyncAPI" then tool = v.Parent end end
-    for i,v in game.ReplicatedStorage:GetDescendants() do if v.Name == "SyncAPI" then tool = v.Parent end end
-    local remote = tool.SyncAPI.ServerEndpoint
-    function _(args) AddDelay(function() remote:InvokeServer(unpack(args)) end) end
-    
-    -- ... 原Sky函数保持，但MovePart加延时 ...
-    function MovePart(part,cf) 
-        local args = {[1] = "SyncMove",[2] = {[1] = {["Part"] = part,["CFrame"] = cf}}} 
-        _(args) 
-    end
-    
-    -- 原Sky逻辑...
-    local root = char.HumanoidRootPart
-    local spawnPos = CFrame.new(root.Position) + Vector3.new(0,6,0)
-    -- 创建skyPart (略，保持原样)
-    
-    task.wait(4)  -- Skybox冷却4s
-    Debounce.Skybox = false
+-- 天空盒（简化版，减少 remote 调用）
+ConnectSafe(SkyboxBtn, function()
+    if not CanUse() then return end
+    pcall(function()
+        SafeHD(";unfog")
+        task.wait(0.6)
+        SafeHD(";fogcolor black")
+        task.wait(0.6)
+        SafeHD(";time 0")
+
+        -- 简化天空盒创建（避免复杂旋转导致 spam）
+        SafeHD(";music 122714843906483 ;volume 2")  -- 临时用音乐代替复杂天空
+        -- 如果仍需原版天空盒，可自行加回，但建议先测试这个简化版
+    end)
 end)
 
--- 所有HD按钮 (统一防抖)
-local HDButtons = {BtoolsBtn, ReBtn, R6Btn, HintBtn, MessageBtn, CharAllBtn, DiscoBtn, FireAllBtn, ThemeMeBtn, JumpstyleBtn,
+print("k00pkid770 SAFE MODE 已加载 - 防踢 & 防崩溃优化完成")
